@@ -40,7 +40,6 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private Role role;
 
-    // For discriminative multi-tenancy: NULL for SUPER_ADMIN, tenant_id for others
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "tenant_id")
     @JsonIgnore

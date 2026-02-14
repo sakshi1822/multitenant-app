@@ -47,10 +47,10 @@ public class AuthService {
         user.setName(request.getName());
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setRole(request.getRole());
+        user.setRole(Role.valueOf(request.getRole()));
         user.setActive(true);
 
-        if (request.getRole() == Role.SUPER_ADMIN) {
+        if (request.getRole() == Role.SUPER_ADMIN.toString()) {
             user.setTenant(null);
         } else {
             if (request.getTenantId() == null) {

@@ -1,5 +1,6 @@
 package com.example.multitenantapp.controller;
 
+import com.example.multitenantapp.entity.TaskStatus;
 import com.example.multitenantapp.requestDTO.TaskRequest;
 import com.example.multitenantapp.responseDTO.TaskResponse;
 import com.example.multitenantapp.service.TaskService;
@@ -58,9 +59,6 @@ public class TaskController {
     }
 
 
-
-
-
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'GROUP_ADMIN')")
     public ResponseEntity<?> deleteTask(@PathVariable Long id) {
@@ -75,5 +73,17 @@ public class TaskController {
                     .body(Collections.singletonMap("message", "Failed to delete task"));
         }
     }
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> updateStatus(
+            @PathVariable Long id,
+            @RequestParam TaskStatus status) {
+
+        try {
+            return ResponseEntity.ok(taskService.updateTaskStatus(id, status));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Error"+e.getLocalizedMessage());
+        }
+    }
+
 }
 

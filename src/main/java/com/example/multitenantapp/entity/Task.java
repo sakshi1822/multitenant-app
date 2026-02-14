@@ -41,8 +41,14 @@ public class Task {
     @JsonIgnore
     private User createdBy;
 
+    @Enumerated(EnumType.STRING)
+    private TaskStatus status = TaskStatus.ASSIGNED;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime lastStatusUpdate;
+
+    private LocalDateTime lastReminderSent;
+
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
